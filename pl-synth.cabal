@@ -19,20 +19,27 @@ common warnings
   ghc-options: -Wall
 
 library
-  import:           warnings
+  import:             warnings
   exposed-modules:
+    Dsl
     Songs
     Songs.Roses
 
   -- other-modules:
-  -- other-extensions:
+  default-extensions:
+    DerivingStrategies
+    NoImplicitPrelude
+    OverloadedRecordDot
+
   build-depends:
-    , base      ^>=4.18.2.1
+    , base        ^>=4.18.2.1
+    , containers
     , pl-synth
     , relude
+    , vector
 
-  hs-source-dirs:   src
-  default-language: GHC2021
+  hs-source-dirs:     src
+  default-language:   GHC2021
 
 executable all-songs
   main-is:          Main.hs
