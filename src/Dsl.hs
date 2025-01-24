@@ -7,7 +7,7 @@ import Sound.PlSynth (PlSynthT (..))
 
 type Song = [([Word8], [[Word8]], PlSynthT)]
 
-newtype SynthIndex = SynthIndex {unSynthIndex :: Word8}
+newtype SynthIndex = SynthIndex {_unSynthIndex :: Word8}
   deriving newtype (Ord, Eq, Show)
 
 newtype PatternIndex = PatternIndex {unPatternIndex :: Word8}
