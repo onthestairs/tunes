@@ -1,10 +1,11 @@
-module Dsl (synth, patt, build) where
+module Dsl (Song, synth, patt, build) where
 
-import Data.IntMap qualified as IntMap
 import Data.Map.Strict qualified as Map
 import Data.Vector qualified as Vector
 import Relude hiding (seq)
 import Sound.PlSynth (PlSynthT (..))
+
+type Song = [([Word8], [[Word8]], PlSynthT)]
 
 newtype SynthIndex = SynthIndex {unSynthIndex :: Word8}
   deriving newtype (Ord, Eq, Show)
