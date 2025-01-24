@@ -3,7 +3,7 @@ module Songs.Roses (roses) where
 import Dsl
 import Relude
 import Sound.PlSynth (PlSynthT (..))
-import Synths qualified as Synths
+import Synths qualified
 
 leadSynth :: PlSynthT
 leadSynth = PlSynthT 9 0 0 0 255 0 9 0 12 0 255 0 0 100 0 14545 70 0 0 240 2 157 3 47 0 0 0 0 0
