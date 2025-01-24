@@ -3,15 +3,10 @@ module Songs.Roses (roses) where
 import Dsl
 import Relude
 import Sound.PlSynth (PlSynthT (..))
+import Synths qualified as Synths
 
 leadSynth :: PlSynthT
 leadSynth = PlSynthT 9 0 0 0 255 0 9 0 12 0 255 0 0 100 0 14545 70 0 0 240 2 157 3 47 0 0 0 0 0
-
-bassDrum :: PlSynthT
-bassDrum = PlSynthT 7 0 0 1 255 0 7 0 0 1 255 0 0 100 0 3636 254 2 500 254 0 27 0 0 0 0 0 0 0
-
-hihat' :: PlSynthT
-hihat' = PlSynthT 8 0 0 0 0 0 8 0 0 0 0 0 60 50 419 4607 130 1 10332 120 4 16 5 108 0 0 5 187 0
 
 makeRiff :: (Num b) => [b] -> [b]
 makeRiff bassNotes = concatMap (\n -> bassNotes <> [n]) [66, 65, 61, 70, 65] <> [66]
@@ -32,8 +27,8 @@ syncopatedFour = replicateL 16 [0, 147]
 roses :: Song
 roses = build $ do
   lead <- synth leadSynth
-  bass <- synth bassDrum
-  hihat <- synth hihat'
+  bass <- synth Synths.bassDrum
+  hihat <- synth Synths.hihat
   leadPattern1 <- patt lead riff1
   leadPattern2 <- patt lead riff2
   four <- patt bass fourOnTheFloor

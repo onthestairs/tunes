@@ -24,6 +24,7 @@ library
     Dsl
     Songs
     Songs.Roses
+    Synths
 
   -- other-modules:
   default-extensions:
