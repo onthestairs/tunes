@@ -8,5 +8,5 @@ bpm :: Word32 -> Word32
 bpm n = 60 * 44100 `div` 4 `div` n
 
 main :: IO ()
-main = do
-  withPlSynth $ withSongTracks (bpm 70) roses $ writeSong "test-song.wav"
+main = withPlSynth $ do
+  withSongTracks (bpm 80) roses $ writeSong "roses.wav"
