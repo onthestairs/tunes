@@ -22,6 +22,7 @@ library
   import:             warnings
   exposed-modules:
     Dsl
+    Notes
     Songs
     Songs.Roses
     Synths

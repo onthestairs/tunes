@@ -2,13 +2,11 @@ module Dsl (Song, synth, patt, build, Note) where
 
 import Data.Map.Strict qualified as Map
 import Data.Vector qualified as Vector
+import Notes
 import Relude hiding (seq)
 import Sound.PlSynth (PlSynthT (..))
 
 type Song = [([Word8], [[Word8]], PlSynthT)]
-
-newtype Note = Note {unNote :: Word8}
-  deriving newtype (Ord, Eq, Show, Num)
 
 newtype SynthIndex = SynthIndex {_unSynthIndex :: Word8}
   deriving newtype (Ord, Eq, Show)
