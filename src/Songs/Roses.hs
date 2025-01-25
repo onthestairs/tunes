@@ -11,17 +11,17 @@ leadSynth = PlSynthT 9 0 0 0 255 0 9 0 12 0 255 0 0 100 0 14545 70 0 0 240 2 157
 makeRiff :: (Num b) => [b] -> [b]
 makeRiff bassNotes = concatMap (\n -> bassNotes <> [n]) [66, 65, 61, 70, 65] <> [66]
 
-riff1, riff2 :: [Word8]
+riff1, riff2 :: [Note]
 riff1 = map (+ 75) (makeRiff [51, 58] <> makeRiff [51, 58])
 riff2 = map (+ 75) (makeRiff [47, 54] <> makeRiff [49, 56])
 
 replicateL :: Int -> [a] -> [a]
 replicateL n = concat . replicate n
 
-fourOnTheFloor :: [Word8]
+fourOnTheFloor :: [Note]
 fourOnTheFloor = replicateL 16 [147, 0]
 
-syncopatedFour :: [Word8]
+syncopatedFour :: [Note]
 syncopatedFour = replicateL 16 [0, 147]
 
 roses :: Song

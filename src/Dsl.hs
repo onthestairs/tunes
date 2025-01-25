@@ -1,4 +1,4 @@
-module Dsl (Song, synth, patt, build) where
+module Dsl (Song, synth, patt, build, Note) where
 
 import Data.Map.Strict qualified as Map
 import Data.Vector qualified as Vector
@@ -6,6 +6,9 @@ import Relude hiding (seq)
 import Sound.PlSynth (PlSynthT (..))
 
 type Song = [([Word8], [[Word8]], PlSynthT)]
+
+newtype Note = Note {unNote :: Word8}
+  deriving newtype (Ord, Eq, Show, Num)
 
 newtype SynthIndex = SynthIndex {_unSynthIndex :: Word8}
   deriving newtype (Ord, Eq, Show)
@@ -15,7 +18,7 @@ newtype PatternIndex = PatternIndex {unPatternIndex :: Word8}
 
 data S = S
   { synths :: Vector.Vector PlSynthT,
-    patterns :: Map.Map SynthIndex (Vector.Vector [Word8])
+    patterns :: Map.Map SynthIndex (Vector.Vector [Note])
   }
   deriving (Eq, Show)
 
@@ -25,7 +28,7 @@ synth x = do
   modify' $ \s -> s {synths = Vector.snoc s.synths x}
   pure n
 
-patt :: SynthIndex -> [Word8] -> State S (SynthIndex, PatternIndex)
+patt :: SynthIndex -> [Note] -> State S (SynthIndex, PatternIndex)
 patt synthIndex x = do
   modify' $ \s -> do
     let v = Vector.singleton x
@@ -39,7 +42,7 @@ build song = do
   let (grid, result) = runState song (S Vector.empty Map.empty)
   toList $ flip Vector.imap result.synths $ \synthIndex s -> do
     let si = SynthIndex $ toEnum synthIndex
-    let patterns = toList $ Map.findWithDefault Vector.empty si result.patterns
+    let patterns = map (map (.unNote)) $ toList $ Map.findWithDefault Vector.empty si result.patterns
     let findPattern row = maybe 0 ((.unPatternIndex) . snd) $ find (\(si', _pi') -> si == si') row
     let seq = map findPattern grid
     (seq, patterns, s)
