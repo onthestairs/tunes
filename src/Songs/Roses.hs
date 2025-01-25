@@ -26,13 +26,16 @@ syncopatedFour = replicateL 16 [0, 147]
 
 roses :: Song
 roses = build $ do
-  lead <- synth leadSynth
   bass <- synth Synths.bassDrum
+  bass0 <- patt bass fourOnTheFloor
+
   hihat <- synth Synths.hihat
+  hihat0 <- patt hihat syncopatedFour
+
+  lead <- synth leadSynth
   lead0 <- patt lead riff1
   lead1 <- patt lead riff2
-  bass0 <- patt bass fourOnTheFloor
-  hihat0 <- patt hihat syncopatedFour
+
   pure
     [ [bass0],
       [bass0, hihat0],
