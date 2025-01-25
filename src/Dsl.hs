@@ -16,19 +16,19 @@ newtype SynthIndex = SynthIndex {_unSynthIndex :: Word8}
 newtype PatternIndex = PatternIndex {unPatternIndex :: Word8}
   deriving newtype (Ord, Eq, Show)
 
-data S = S
+data SongState = SongState
   { synths :: Vector.Vector PlSynthT,
     patterns :: Map.Map SynthIndex (Vector.Vector [Note])
   }
   deriving (Eq, Show)
 
-synth :: PlSynthT -> State S SynthIndex
+synth :: PlSynthT -> State SongState SynthIndex
 synth x = do
   n <- gets $ SynthIndex . toEnum . Vector.length . synths
   modify' $ \s -> s {synths = Vector.snoc s.synths x}
   pure n
 
-patt :: SynthIndex -> [Note] -> State S (SynthIndex, PatternIndex)
+patt :: SynthIndex -> [Note] -> State SongState (SynthIndex, PatternIndex)
 patt synthIndex x = do
   modify' $ \s -> do
     let v = Vector.singleton x
@@ -37,9 +37,9 @@ patt synthIndex x = do
   n <- gets $ PatternIndex . toEnum . Vector.length . Map.findWithDefault Vector.empty synthIndex . (.patterns)
   pure (synthIndex, n)
 
-build :: State S [[(SynthIndex, PatternIndex)]] -> [([Word8], [[Word8]], PlSynthT)]
+build :: State SongState [[(SynthIndex, PatternIndex)]] -> [([Word8], [[Word8]], PlSynthT)]
 build song = do
-  let (grid, result) = runState song (S Vector.empty Map.empty)
+  let (grid, result) = runState song (SongState Vector.empty Map.empty)
   toList $ flip Vector.imap result.synths $ \synthIndex s -> do
     let si = SynthIndex $ toEnum synthIndex
     let patterns = map (map (.unNote)) $ toList $ Map.findWithDefault Vector.empty si result.patterns
