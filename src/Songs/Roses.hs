@@ -10,11 +10,11 @@ leadSynth :: PlSynthT
 leadSynth = PlSynthT 9 0 0 0 255 0 9 0 12 0 255 0 0 100 0 14545 70 0 0 240 2 157 3 47 0 0 0 0 0
 
 makeRiff :: [Note] -> [Note]
-makeRiff bassNotes = concatMap (\n -> bassNotes <> [n]) [fs4, f4, cs4, as4, f4] <> [fs4]
+makeRiff bassNotes = concatMap (\n -> bassNotes <> [n]) [f'4, f4, c'4, a'4, f4] <> [f'4]
 
 riff1, riff2 :: [Note]
-riff1 = makeRiff [ds3, as3] <> makeRiff [ds3, as3]
-riff2 = makeRiff [b2, fs3] <> makeRiff [cs3, gs3]
+riff1 = makeRiff [d'3, a'3] <> makeRiff [d'3, a'3]
+riff2 = makeRiff [b2, f'3] <> makeRiff [c'3, g'3]
 
 replicateL :: Int -> [a] -> [a]
 replicateL n = concat . replicate n
