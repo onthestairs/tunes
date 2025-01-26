@@ -26,6 +26,7 @@ library
     Songs
     Songs.Roses
     Synths
+    Theory
 
   -- other-modules:
   default-extensions:
