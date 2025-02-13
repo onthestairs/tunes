@@ -33,12 +33,6 @@ bassRiff1, bassRiff2 :: [Note]
 bassRiff1 = ([d'4] <> replicate 15 0) <> ([d'4] <> replicate 15 0)
 bassRiff2 = ([b3] <> replicate 15 0) <> (replicate 5 c4 <> replicate 11 0)
 
-data Scale = Major | Minor
-
-arpeggio :: Note -> Scale -> [Note]
-arpeggio root Major = cycle [root, majorThird root, fifth root]
-arpeggio root Minor = cycle [root, minorThird root, fifth root]
-
 everyOther :: Note -> [Note]
 everyOther n = cycle [n, 0]
 
