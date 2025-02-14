@@ -27,6 +27,7 @@ library
     Songs
     Songs.Roses
     Synths
+    Synths.Types
     Theory
 
   -- other-modules:
@@ -34,6 +35,7 @@ library
     DerivingStrategies
     NoImplicitPrelude
     OverloadedRecordDot
+    PatternSynonyms
 
   build-depends:
     , aeson

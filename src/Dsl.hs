@@ -5,6 +5,7 @@ import Data.Vector qualified as Vector
 import Notes
 import Relude hiding (seq)
 import Sound.PlSynth (PlSynthT (..))
+import Synths.Types (Synth, toPlSynth)
 
 type Song = [([Word8], [[Word8]], PlSynthT)]
 
@@ -15,12 +16,12 @@ newtype PatternIndex = PatternIndex {unPatternIndex :: Word8}
   deriving newtype (Ord, Eq, Show)
 
 data SongState = SongState
-  { synths :: Vector.Vector PlSynthT,
+  { synths :: Vector.Vector Synth,
     patterns :: Map.Map SynthIndex (Vector.Vector [Note])
   }
   deriving (Eq, Show)
 
-synth :: PlSynthT -> State SongState SynthIndex
+synth :: Synth -> State SongState SynthIndex
 synth x = do
   n <- gets $ SynthIndex . toEnum . Vector.length . synths
   modify' $ \s -> s {synths = Vector.snoc s.synths x}
@@ -43,4 +44,4 @@ build song = do
     let patterns = map (map (.unNote)) $ toList $ Map.findWithDefault Vector.empty si result.patterns
     let findPattern row = maybe 0 ((.unPatternIndex) . snd) $ find (\(si', _pi') -> si == si') row
     let seq = map findPattern grid
-    (seq, patterns, s)
+    (seq, patterns, toPlSynth s)
