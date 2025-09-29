@@ -4,6 +4,9 @@ module Synths
     leadSynth,
     weirdSynth,
     spaceySynth,
+    epmSynth,
+    floatySynth,
+    paddySynth,
   )
 where
 
@@ -243,6 +246,153 @@ spaceySynth =
             fxDelayAmt = FxDelayAmt 157,
             fxPanFreq = FxPanFreq 0,
             fxPanAmt = FxPanAmt 0
+          },
+      lfo =
+        LfoConfig
+          { lfoOscFreq = LfoOscFreq 0,
+            lfoFxFreq = LfoFxFreq 0,
+            lfoFreq = LfoFreq 0,
+            lfoAmt = LfoAmt 0,
+            lfoWaveform = LfoWaveform 0
+          }
+    }
+
+epmSynth :: Synth
+epmSynth =
+  Synth
+    { osc0 =
+        OscConfig
+          { oscOct = OscOct 7,
+            oscDet = OscDet 0,
+            oscDetune = OscDetune 0,
+            oscXEnv = OscXEnv 0,
+            oscVol = OscVol 255,
+            oscWaveform = OscWaveform 3
+          },
+      osc1 =
+        OscConfig
+          { oscOct = OscOct 8,
+            oscDet = OscDet 0,
+            oscDetune = OscDetune 0,
+            oscXEnv = OscXEnv 0,
+            oscVol = OscVol 255,
+            oscWaveform = OscWaveform 0
+          },
+      noiseFader = NoiseFader 127,
+      env =
+        EnvConfig
+          { envAttack = EnvAttack 22,
+            envSustain = EnvSustain 22,
+            envRelease = EnvRelease 2193,
+            envMaster = EnvMaster 255
+          },
+      fx =
+        FxConfig
+          { fxFilter = FxFilter 3,
+            fxFreq = FxFreq 4067,
+            fxResonance = FxResonance 176,
+            fxDelayTime = FxDelayTime 4,
+            fxDelayAmt = FxDelayAmt 12,
+            fxPanFreq = FxPanFreq 2,
+            fxPanAmt = FxPanAmt 84
+          },
+      lfo =
+        LfoConfig
+          { lfoOscFreq = LfoOscFreq 0,
+            lfoFxFreq = LfoFxFreq 1,
+            lfoFreq = LfoFreq 3,
+            lfoAmt = LfoAmt 96,
+            lfoWaveform = LfoWaveform 0
+          }
+    }
+
+floatySynth :: Synth
+floatySynth =
+  Synth
+    { osc0 =
+        OscConfig
+          { oscOct = OscOct 9,
+            oscDet = OscDet 0,
+            oscDetune = OscDetune 0,
+            oscXEnv = OscXEnv 0,
+            oscVol = OscVol 255,
+            oscWaveform = OscWaveform 0
+          },
+      osc1 =
+        OscConfig
+          { oscOct = OscOct 9,
+            oscDet = OscDet 0,
+            oscDetune = OscDetune 12,
+            oscXEnv = OscXEnv 0,
+            oscVol = OscVol 255,
+            oscWaveform = OscWaveform 0
+          },
+      noiseFader = NoiseFader 0,
+      env =
+        EnvConfig
+          { envAttack = EnvAttack 100,
+            envSustain = EnvSustain 0,
+            envRelease = EnvRelease 14545,
+            envMaster = EnvMaster 70
+          },
+      fx =
+        FxConfig
+          { fxFilter = FxFilter 0,
+            fxFreq = FxFreq 0,
+            fxResonance = FxResonance 240,
+            fxDelayTime = FxDelayTime 2,
+            fxDelayAmt = FxDelayAmt 157,
+            fxPanFreq = FxPanFreq 3,
+            fxPanAmt = FxPanAmt 47
+          },
+      lfo =
+        LfoConfig
+          { lfoOscFreq = LfoOscFreq 0,
+            lfoFxFreq = LfoFxFreq 0,
+            lfoFreq = LfoFreq 0,
+            lfoAmt = LfoAmt 0,
+            lfoWaveform = LfoWaveform 0
+          }
+    }
+
+paddySynth :: Synth
+paddySynth =
+  Synth
+    { osc0 =
+        OscConfig
+          { oscOct = OscOct 9,
+            oscDet = OscDet 0,
+            oscDetune = OscDetune 0,
+            oscXEnv = OscXEnv 0,
+            oscVol = OscVol 25,
+            oscWaveform = OscWaveform 1
+          },
+      osc1 =
+        OscConfig
+          { oscOct = OscOct 9,
+            oscDet = OscDet 0,
+            oscDetune = OscDetune 12,
+            oscXEnv = OscXEnv 0,
+            oscVol = OscVol 40,
+            oscWaveform = OscWaveform 3
+          },
+      noiseFader = NoiseFader 74,
+      env =
+        EnvConfig
+          { envAttack = EnvAttack 79211,
+            envSustain = EnvSustain 95367,
+            envRelease = EnvRelease 14545,
+            envMaster = EnvMaster 43
+          },
+      fx =
+        FxConfig
+          { fxFilter = FxFilter 2,
+            fxFreq = FxFreq 3318,
+            fxResonance = FxResonance 95,
+            fxDelayTime = FxDelayTime 2,
+            fxDelayAmt = FxDelayAmt 157,
+            fxPanFreq = FxPanFreq 3,
+            fxPanAmt = FxPanAmt 207
           },
       lfo =
         LfoConfig
