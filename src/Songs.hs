@@ -1,14 +1,21 @@
 module Songs where
 
-import Export (exportJson)
+import Export (exportJson, writeWavs)
 import Relude hiding (seq)
-import Songs.Roses (roses)
+import Songs.Roses (roses, sp)
+import Songs.Solaris (solaris)
 import Sound.PlSynth (withPlSynth, withSongTracks, writeSong)
-
-bpm :: Word32 -> Word32
-bpm n = 60 * 44100 `div` 4 `div` n
 
 main :: IO ()
 main = withPlSynth $ do
-  withSongTracks (bpm 80) roses $ writeSong "roses.wav"
-  exportJson (bpm 80) roses "roses.json"
+  writeWavs roses 160 "output/roses"
+
+-- withSongTracks (bpm 160) roses $ writeSong "roses.wav"
+-- exportJson (bpm 160) roses "roses.json"
+
+--
+-- withSongTracks (bpm 160) solaris $ writeSong "solaris.wav"
+-- exportJson (bpm 160) solaris "solaris.json"
+--
+-- withSongTracks (bpm 160) sp $ writeSong "sp.wav"
+-- exportJson (bpm 160) roses "sp.json"

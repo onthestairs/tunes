@@ -22,35 +22,38 @@ mask n = map (\c -> if c == 'x' then n else 0)
 
 roses :: Song
 roses = build $ do
-  bassDrum <- synth Synths.bassDrum
+  bassDrum <- synth "bass-drum" Synths.bassDrum
   fourOnTheFloor <- patt bassDrum (take 32 (everyOther c5))
   fourOnTheFloorFill <- patt bassDrum $ take 32 $ cycle $ take 12 (cycle $ mask c5 "x.") <> mask c5 "xxxx"
 
-  hihat <- synth Synths.hihat
+  hihat <- synth "hihat" Synths.hihat
   hihatSync <- patt hihat (take 32 $ cycle $ mask c5 "..x...x...x...x.")
-  hihatPattern <- patt hihat (take 32 $ cycle $ mask c5 ".xx.x.xx.xxx.xx.")
+  hihatPattern <- patt hihat (take 32 $ cycle $ mask c5 ".xx..xx..xx..xxx")
 
-  lead <- synth Synths.leadSynth
+  lead <- synth "lead" Synths.leadSynth
   lead0 <- patt lead riff0
   lead1 <- patt lead riff1
   lead2 <- patt lead riff2
 
-  weird <- synth Synths.weirdSynth
+  weird <- synth "weird" Synths.weirdSynth
   weird0 <- patt weird (take 32 (arpeggio0 d'3 Minor))
   weird1 <- patt weird (take 32 (arpeggio0 b2 Major))
   weird2 <- patt weird (take 32 (arpeggio0 c'3 Major))
+  weird0Fast <- patt weird (take 32 (arpeggio0Fast d'3 Minor))
+  weird1Fast <- patt weird (take 32 (arpeggio0Fast b2 Major))
+  weird2Fast <- patt weird (take 32 (arpeggio0Fast c'3 Major))
 
-  spacey <- synth Synths.spaceySynth
+  spacey <- synth "spacey" Synths.spaceySynth
   spacey0 <- patt spacey (take 32 (drop 2 $ arpeggio0 d'5 Minor))
   spacey1 <- patt spacey (take 32 (drop 2 $ arpeggio0 b4 Major))
   spacey2 <- patt spacey (take 32 (drop 2 $ arpeggio0 c'4 Major))
 
-  epm <- synth Synths.epmSynth
+  epm <- synth "epm" Synths.epmSynth
   epm0 <- patt epm (take 32 (arpeggio0Fast d'5 Minor))
   epm1 <- patt epm (take 32 (arpeggio0Fast b4 Major))
   epm2 <- patt epm (take 32 (arpeggio0Fast c'4 Major))
 
-  paddy <- synth Synths.paddySynth
+  paddy <- synth "paddy" Synths.paddySynth
   paddy0 <- patt paddy (take 32 (arpeggio0 d'4 Minor))
   paddy1 <- patt paddy (take 32 (arpeggio0 b3 Major))
   paddy2 <- patt paddy (take 32 (arpeggio0 c'3 Major))
@@ -74,13 +77,20 @@ roses = build $ do
           [fourOnTheFloor, hihatPattern, weird1, spacey1, paddy1],
           [fourOnTheFloor, hihatPattern, weird2, spacey2, paddy2]
         ]
-  let bridge =
-        [ [fourOnTheFloor, weird0, epm0, paddy0],
-          [fourOnTheFloor, weird0, epm0, paddy0],
-          [fourOnTheFloor, weird1, epm1, paddy1],
-          [fourOnTheFloor, weird2, epm2, paddy2]
+  let bridge0 =
+        [ [fourOnTheFloor, hihatSync, weird0, epm0, paddy0],
+          [fourOnTheFloor, hihatSync, weird0, epm0, paddy0],
+          [fourOnTheFloor, hihatSync, weird1, epm1, paddy1],
+          [fourOnTheFloor, hihatSync, weird2, epm2, paddy2]
         ]
-  let quietBit = [[spacey0, spacey0, spacey1, spacey2]]
+  let bridge1 =
+        [ [fourOnTheFloorFill, hihatSync, weird0Fast, epm0, paddy0],
+          [fourOnTheFloorFill, hihatSync, weird0Fast, epm0, paddy0],
+          [fourOnTheFloorFill, hihatSync, weird1Fast, epm1, paddy1],
+          [fourOnTheFloorFill, hihatSync, weird2Fast, epm2, paddy2]
+        ]
+
+  let quietBit = [[spacey0], [spacey0]]
   let riff =
         [ [fourOnTheFloor, hihatPattern, weird0, spacey0, lead0, paddy0],
           [fourOnTheFloor, hihatPattern, weird0, spacey0, lead0, paddy0],
@@ -104,15 +114,20 @@ roses = build $ do
         riff,
         riff,
         quietBit,
-        bridge,
-        bridge,
-        bridge,
-        bridge
+        bridge0,
+        bridge0,
+        bridge0,
+        bridge0,
+        bridge1,
+        bridge1,
+        bridge1,
+        bridge1,
+        quietBit
       ]
 
 sp :: Song
 sp = build $ do
-  epm <- synth Synths.epmSynth
+  epm <- synth "epm" Synths.epmSynth
   spacey0 <- patt epm (take 32 (arpeggio0Fast d'5 Minor))
   spacey1 <- patt epm (take 32 (arpeggio0Fast b4 Major))
   spacey2 <- patt epm (take 32 (arpeggio0Fast c'4 Major))

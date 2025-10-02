@@ -11,10 +11,10 @@ everyOther n = cycle [n, 0, 0, 0]
 
 solaris :: Song
 solaris = build $ do
-  bassDrum <- synth Synths.bassDrum
+  bassDrum <- synth "bass-drum" Synths.bassDrum
   fourOnTheFloor <- patt bassDrum (take 32 (everyOther c5))
 
-  weird <- synth Synths.weirdSynth
+  weird <- synth "weird" Synths.weirdSynth
   let makeWeird ns1 ns2 = patt weird $ (take 16 $ arpeggio3 ns1) <> (take 16 $ arpeggio3 ns2)
   let makeWeird' nss = patt weird $ concat $ map (\(l, ns) -> take l $ arpeggio3 ns) nss
   weird0 <- makeWeird [g'3, c4, f4, e4] [f4, c4, g'3, f3]
@@ -27,7 +27,7 @@ solaris = build $ do
         (8, [g'4, d'4, f4, f'4])
       ]
 
-  spacey <- synth Synths.spaceySynth
+  spacey <- synth "spacey" Synths.spaceySynth
   let makeSpacey ns1 ns2 = patt spacey $ take 16 (arpeggio3 (reverse $ map octave ns1)) <> take 16 (arpeggio3 (reverse $ map octave ns2))
   let makeSpacey' nss = patt spacey $ concat $ map (\(l, ns) -> take l $ arpeggio3 (reverse $ map octave ns)) nss
   spacey0 <- makeSpacey [g'3, c4, f4, e4] [f4, c4, g'3, f3]
