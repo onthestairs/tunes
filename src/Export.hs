@@ -1,11 +1,15 @@
-module Export (writeWavs, exportJson) where
+module Export
+  ( exportSong,
+    writeWavs,
+    exportJson,
+  )
+where
 
 import Data.Aeson
 import Dsl (Song, SynthName (..))
-import Relude
 import Relude hiding (seq)
-import Songs.Roses (roses)
 import Sound.PlSynth (PlSynthT (..), withPlSynth, withSongTracks, writeSong)
+import System.Directory
 
 makeBpm :: Word32 -> Word32
 makeBpm n = 60 * 44100 `div` 4 `div` n
@@ -15,19 +19,25 @@ type BPM = Word32
 type PlSong = [([Word8], [[Word8]], PlSynthT)]
 
 toPlSong :: Song -> PlSong
-toPlSong = map (\(name, seq, patterns, synth) -> (seq, patterns, synth))
+toPlSong = map (\(_name, seq, patterns, synth) -> (seq, patterns, synth))
+
+exportSong :: Song -> BPM -> FilePath -> IO ()
+exportSong song bpm path = withPlSynth $ do
+  let bpm' = makeBpm bpm
+  writeWavs song bpm' path
+  exportJson bpm' song (path <> "/song.json")
 
 writeWavs :: Song -> BPM -> FilePath -> IO ()
 writeWavs song bpm path = withPlSynth $ do
-  let bpm' = makeBpm bpm
+  createDirectoryIfMissing True path
   -- write the whole song
   let fullPath = path <> "/full.wav"
   let plSong = toPlSong song
-  withSongTracks bpm' plSong $ writeSong fullPath
+  withSongTracks bpm plSong $ writeSong fullPath
   -- write the individual tracks
   forM_ song $ \(name, seq, patterns, synth) -> do
     let trackPath = path <> "/" <> toString name.toSynthName <> ".wav"
-    withSongTracks bpm' [(seq, patterns, synth)] $ writeSong trackPath
+    withSongTracks bpm [(seq, patterns, synth)] $ writeSong trackPath
 
 number :: (Enum a) => a -> Value
 number = Number . fromIntegral . fromEnum

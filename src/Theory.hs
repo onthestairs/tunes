@@ -12,7 +12,7 @@ module Theory
   )
 where
 
-import Notes (Note (Note))
+import Notes (Note (..))
 import Relude
 
 fifth :: Note -> Note
